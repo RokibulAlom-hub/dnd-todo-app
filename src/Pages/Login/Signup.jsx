@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provider/Authprovider/Authprovider";
 
 const Signup = () => {
+    const {name,googlelogin} = useContext(AuthContext);
+    console.log(name);
+    
   return (
     <div className="bg-primary min-h-screen flex flex-col justify-center items-center text-white">
       <h2 className="font-bold  text-2xl my-3 ">Sign Up</h2>
