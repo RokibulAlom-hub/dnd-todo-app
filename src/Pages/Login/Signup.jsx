@@ -2,15 +2,31 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
-  const { name, googlelogin } = useAuth();
-  const navigate = useNavigate()
-  console.log(name);
+  const {  googlelogin } = useAuth();
+  const navigate = useNavigate();
   const handlegoggle = () => {
     googlelogin()
       .then((result) => {
-        // console.log(result.user)
-        alert('login successful')
-        navigate('/dashboard')
+       
+        const userdata = {
+          name : result.user.displayName,
+          email: result.user.email
+        }
+        // console.log(userdata)
+        // Create a new item
+        fetch(`${import.meta.env.VITE_LOCALHOST_URL}/user-creation`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userdata),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log("Item created:", data))
+          .catch((error) => console.error("Error creating item:", error));
+
+        alert("login successful");
+        navigate("/dashboard");
       })
       .catch((err) => console.log(err.message));
   };
