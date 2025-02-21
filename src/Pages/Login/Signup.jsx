@@ -1,16 +1,26 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../Provider/Authprovider/Authprovider";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Signup = () => {
-    const {name,googlelogin} = useContext(AuthContext);
-    console.log(name);
-    
+  const { name, googlelogin } = useAuth();
+  const navigate = useNavigate()
+  console.log(name);
+  const handlegoggle = () => {
+    googlelogin()
+      .then((result) => {
+        // console.log(result.user)
+        alert('login successful')
+        navigate('/dashboard')
+      })
+      .catch((err) => console.log(err.message));
+  };
   return (
     <div className="bg-primary min-h-screen flex flex-col justify-center items-center text-white">
       <h2 className="font-bold  text-2xl my-3 ">Sign Up</h2>
       or
-      <Link to="/" className="font-semibold  text-xl my-3 ">Go Home</Link>
+      <Link to="/" className="font-semibold  text-xl my-3 ">
+        Go Home
+      </Link>
       <div className="space-y-4 shadow-2xl p-4">
         <div>
           <input
@@ -55,7 +65,7 @@ const Signup = () => {
           Register
         </button>
         <button
-          // onClick={handleGoogleLogin}
+          onClick={handlegoggle}
           className="w-full px-4 py-2 mt-4  rounded-lg shadow-sm  flex items-center justify-center bg-[#006D77]  hover:scale-110  duration-500 ease-in-out"
         >
           Continue with Google
