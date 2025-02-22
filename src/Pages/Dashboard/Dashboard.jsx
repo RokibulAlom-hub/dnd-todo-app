@@ -27,7 +27,7 @@ const Dashboard = () => {
       // now filter the data for each task category here
       const taskFiltering = {
         todo: data.filter((task) => task.status === "todo"),
-        inprogress: data.filter((task) => task.status === "inprogress"),
+        inProgress: data.filter((task) => task.status === "inProgress"),
         done: data.filter((task) => task.status === "done"),
       };
       setTasks(taskFiltering);
@@ -72,6 +72,11 @@ const Dashboard = () => {
             : [{ ...movedTask, status: targetColumn }],
         }));
       }
+      fetch(`${import.meta.env.VITE_LOCALHOST_URL}/update-todo/${sourceId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: targetColumn }),
+      }).catch((err) => console.error("Error updating task:", err));
     }
   };
 
