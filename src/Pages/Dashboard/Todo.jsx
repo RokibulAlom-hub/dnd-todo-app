@@ -22,8 +22,24 @@ const Todo = () => {
     };
 
     fetchTodoList();
-  }, []);
-  console.log(mytodoList);
+  }, [user?.email]);
+  const handledelete = (id) => {
+    console.log(id);
+    // Delete an item
+ fetch(`${import.meta.env.VITE_LOCALHOST_URL}/todo-delete/${id}`, {
+    method: 'DELETE'
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Item deleted');
+        alert("item deleted")
+      } else {
+        throw new Error('Error deleting item');
+      }
+    })
+    .catch(error => console.error('Error deleting item:', error));  
+  }
+//   console.log(mytodoList);
   
 
   return (
@@ -31,11 +47,11 @@ const Todo = () => {
     <div className="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col w-full max-w-lg">
       <h2 className="text-2xl font-semibold mb-6 text-center text-blue-500">To Do</h2>
       <div className="flex-grow space-y-4">
-        {mytodoList.map((data, key) => (
+        {mytodoList?.map((data, key) => (
           <div key={key} className="bg-gray-50 p-4 rounded-md shadow-sm">
-            <span className="block mb-2 font-medium text-gray-800">{key + 1}.</span>
-            <h1 className="text-xl font-semibold text-gray-900">{data.title}</h1>
-            <p className="text-gray-700">{data.description}</p>
+            <span className="block mb-2 font-medium ">{key + 1}.</span>
+            <h1 className="text-xl font-semibold ">{data.title}</h1>
+            <button onClick={() =>handledelete(data._id)} className="p-2 bg-[#006D77] rounded text-white ">Delete</button>
           </div>
         ))}
       </div>
