@@ -1,17 +1,20 @@
+import { useDroppable } from "@dnd-kit/core";
+import { TaskItem } from "./Todo";
 
-const Inprogress = () => {
+const Inprogress = ({ tasks }) => {
+    const { setNodeRef } = useDroppable({ id: "inProgress" });
+  
     return (
-        <div className="flex justify-center  items-center p-4">
-            <div className="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col w-full max-w-lg">
-                <h2 className="text-2xl font-semibold mb-6 text-center text-blue-500">
-                    In Progress
-                </h2>
-                <div className="flex-grow space-y-4">
-                    <p className="text-gray-500">No tasks yet.</p>
-                </div>
-            </div>
+      <div ref={setNodeRef} className="bg-white text-black p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-semibold mb-6 text-center text-orange-500">In Progress</h2>
+        <div className="space-y-4">
+          {tasks?.map((task) => (
+            <TaskItem key={task._id} task={task} />
+          ))}
         </div>
+      </div>
     );
-};
-
-export default Inprogress;
+  };
+  
+  export default Inprogress;
+  

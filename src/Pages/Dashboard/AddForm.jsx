@@ -16,8 +16,8 @@ const AddForm = () => {
     const newEntry = {
       email: user?.email,
       title: title.trim(),
-      description: description.trim(),
       timestamp: new Date().toLocaleString(),
+      status:"todo"
     };
 
     fetch(`${import.meta.env.VITE_LOCALHOST_URL}/todo-creation`, {
