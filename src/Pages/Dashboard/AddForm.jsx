@@ -1,7 +1,7 @@
 import {  useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
-const AddForm = () => {
+const AddForm = ({refetch}) => {
   const {user} = useAuth()
   const [title, setTitle] = useState("");
 
@@ -27,17 +27,22 @@ const AddForm = () => {
       },
       body: JSON.stringify(newEntry),
     })
-      .then((response) => response.json())
-      .then((data) => console.log("Item created:", data))
+      .then((response) => response.json({}))
+      .then((data) =>{
+        console.log(data);
+        refetch()
+      })
       .catch((error) => console.error("Error creating item:", error));
-    console.log(newEntry);
+    // console.log(newEntry);
+     
 
     // Reset form
     setTitle("");
+    
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-2 text-black rounded-lg shadow-md">
+    <div className="max-w-md mx-auto bg-white p-2 mb-5 text-black rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Add New Entry</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
